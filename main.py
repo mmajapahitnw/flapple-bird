@@ -2,8 +2,7 @@ import pygame
 from config import Config, State
 from game_phases import menu_phase, gameplay_phase
 
-screen = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT))
-pygame.display.set_caption('flapple bird')
+
 
 frame_per_sec = pygame.time.Clock()
 
@@ -16,9 +15,9 @@ def main():
 
     while True:
         if State.game_state == 0:
-            menu_phase(screen)
+            menu_phase()
         elif State.game_state == 1:
-            gameplay_phase(screen)
+            gameplay_phase()
         elif State.game_state == 2:
             pass
 

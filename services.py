@@ -69,4 +69,8 @@ class VisualService:
     def get_red_pipe():
         return pygame.image.load('sprites/pipe-red.png').convert_alpha()
 
+    @staticmethod
+    def get_icon():
+        return pygame.image.load('favicon.ico').convert_alpha()
+
 
