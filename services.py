@@ -3,7 +3,7 @@ import pygame
 class VisualService:
     @staticmethod
     def get_message():
-        return pygame.image.load('sprites/message.png').convert()
+        return pygame.image.load('sprites/message.png')
 
     @staticmethod
     def get_game_over():
@@ -68,4 +68,5 @@ class VisualService:
     @staticmethod
     def get_red_pipe():
         return pygame.image.load('sprites/pipe-red.png').convert_alpha()
+
 
