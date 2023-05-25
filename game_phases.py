@@ -1,5 +1,7 @@
 import pygame
+from random import randint
 from player import Player
+from pipe import Pipe
 import services
 from config import Config, State
 
@@ -8,9 +10,14 @@ pygame.display.set_caption('flapple bird')
 icon = services.VisualService.get_icon()
 pygame.display.set_icon(icon)
 
+pipe_timer = pygame.USEREVENT + 1
+pygame.time.set_timer(pipe_timer, 4500)
+
 P1 = Player()
 player = pygame.sprite.GroupSingle()
 player.add(P1)
+
+pipes = pygame.sprite.Group()
 
 def move_scroll(scroll):
     scroll -= 1
@@ -40,21 +47,22 @@ def menu_phase():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if (event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE) or event.type == pygame.MOUSEBUTTONDOWN:
+        if pygame.mouse.get_pressed()[0]:
             State.game_state = 1
 
 def gameplay_phase():
     # display backgorund
     screen.blit(services.VisualService.get_bg_day(), (0, 0))
 
-    # display moving ground
-    Config.SCROLL = move_scroll(Config.SCROLL)
-    moving_ground(screen, Config.SCROLL)
-
     player.draw(screen)
     player.update()
 
+    pipes.draw(screen)
+    pipes.update()
 
+    # display moving ground
+    Config.SCROLL = move_scroll(Config.SCROLL)
+    moving_ground(screen, Config.SCROLL)
 
     # event loops
     for event in pygame.event.get():
@@ -63,6 +71,10 @@ def gameplay_phase():
             exit()
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             print('space')
+        if event.type == pipe_timer:
+            y = randint(212, 312)
+            pipes.add(Pipe(0, y))
+            pipes.add(Pipe(1, y-100))
 
 
 
