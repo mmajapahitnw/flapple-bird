@@ -2,13 +2,16 @@ import pygame
 from random import randint
 from player import Player
 from pipe import Pipe
+from score import Score
 import services
 from config import Config, State
 
-screen = pygame.display.set_mode((Config.WIDTH, Config.HEIGHT))
+screen = Config.SCREEN
 pygame.display.set_caption('flapple bird')
 icon = services.VisualService.get_icon()
 pygame.display.set_icon(icon)
+
+screen = Config.SCREEN
 
 pipe_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(pipe_timer, 2000)
@@ -18,6 +21,8 @@ player = pygame.sprite.GroupSingle()
 player.add(P1)
 
 pipes = pygame.sprite.Group()
+
+scores = pygame.sprite.GroupSingle(Score())
 
 def move_scroll(scroll):
     scroll -= 1.5
@@ -70,6 +75,9 @@ def gameplay_phase():
     player.draw(screen)
     player.update()
 
+    scores.draw(screen)
+    scores.update()
+
     # is game over
     check_pipe_collisions()
 
@@ -91,6 +99,10 @@ def gameover_phase():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            pipes.empty()
+            State.score = 0
+            State.game_state = 1
 
     screen.blit(services.VisualService.get_game_over(), (Config.WIDTH//2-services.VisualService.get_game_over().get_width()//2,
                                                          Config.HEIGHT//2-services.VisualService.get_game_over().get_height()//2))

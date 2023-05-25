@@ -73,4 +73,43 @@ class VisualService:
     def get_icon():
         return pygame.image.load('favicon.ico').convert_alpha()
 
+    @staticmethod
+    def get_zero():
+        return pygame.image.load('sprites/0.png')
+
+    @staticmethod
+    def get_one():
+        return pygame.image.load('sprites/1.png')
+
+    @staticmethod
+    def get_two():
+        return pygame.image.load('sprites/2.png')
+
+    @staticmethod
+    def get_three():
+        return pygame.image.load('sprites/3.png')
+
+    @staticmethod
+    def get_four():
+        return pygame.image.load('sprites/4.png')
+
+    @staticmethod
+    def get_five():
+        return pygame.image.load('sprites/5.png')
+
+    @staticmethod
+    def get_six():
+        return pygame.image.load('sprites/6.png')
+
+    @staticmethod
+    def get_seven():
+        return pygame.image.load('sprites/7.png')
+
+    @staticmethod
+    def get_eight():
+        return pygame.image.load('sprites/8.png')
+
+    @staticmethod
+    def get_nine():
+        return pygame.image.load('sprites/9.png')
 

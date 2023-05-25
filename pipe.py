@@ -1,5 +1,5 @@
 import pygame
-from config import Config
+from config import Config, State
 from services import VisualService
 
 class Pipe(pygame.sprite.Sprite):
@@ -20,4 +20,5 @@ class Pipe(pygame.sprite.Sprite):
     def update(self):
         self.rect.x -= 2
         if self.rect.right <= 0:
+            State.score += 0.5
             self.kill()
