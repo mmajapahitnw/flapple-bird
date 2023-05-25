@@ -11,7 +11,7 @@ icon = services.VisualService.get_icon()
 pygame.display.set_icon(icon)
 
 pipe_timer = pygame.USEREVENT + 1
-pygame.time.set_timer(pipe_timer, 4500)
+pygame.time.set_timer(pipe_timer, 2000)
 
 P1 = Player()
 player = pygame.sprite.GroupSingle()
@@ -20,13 +20,19 @@ player.add(P1)
 pipes = pygame.sprite.Group()
 
 def move_scroll(scroll):
-    scroll -= 1
+    scroll -= 1.5
     if scroll <= -24:
         scroll = 0
     return scroll
 
 def moving_ground(screen, scroll):
     screen.blit(services.VisualService.get_ground(), (scroll, Config.HEIGHT-100))
+
+def check_pipe_collisions():
+    if pygame.sprite.spritecollide(player.sprite, pipes, False, pygame.sprite.collide_mask):
+        State.game_state = 2
+    if player.sprite.rect.bottom >= 405:
+        State.game_state = 2
 
 def menu_phase():
     # display backgorund
@@ -54,15 +60,18 @@ def gameplay_phase():
     # display backgorund
     screen.blit(services.VisualService.get_bg_day(), (0, 0))
 
-    player.draw(screen)
-    player.update()
-
     pipes.draw(screen)
     pipes.update()
 
     # display moving ground
     Config.SCROLL = move_scroll(Config.SCROLL)
     moving_ground(screen, Config.SCROLL)
+
+    player.draw(screen)
+    player.update()
+
+    # is game over
+    check_pipe_collisions()
 
     # event loops
     for event in pygame.event.get():
@@ -75,6 +84,16 @@ def gameplay_phase():
             y = randint(212, 312)
             pipes.add(Pipe(0, y))
             pipes.add(Pipe(1, y-100))
+
+def gameover_phase():
+    # event loops
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit()
+
+    screen.blit(services.VisualService.get_game_over(), (Config.WIDTH//2-services.VisualService.get_game_over().get_width()//2,
+                                                         Config.HEIGHT//2-services.VisualService.get_game_over().get_height()//2))
 
 
 

@@ -19,30 +19,32 @@ class Player(pygame.sprite.Sprite):
         self.bird_index = 0
         self.image = self.bird_images[self.bird_index][self.flap_index]
         self.rect = self.image.get_rect(center=(50, Config.HEIGHT//2))
+        self.mask = pygame.mask.from_surface(self.image)
 
         self.gravity = 0
+        self.jump_height = 5
 
 
     def player_input(self):
         if pygame.mouse.get_pressed()[0]:
-            self.gravity = -6
+            self.gravity = -self.jump_height
 
 
     def apply_gravity(self):
         self.gravity += 0.5
         self.rect.y += self.gravity
-        if self.gravity >= 6:
-            self.gravity = 6
+        if self.gravity >= self.jump_height:
+            self.gravity = self.jump_height
 
     def animation(self):
         if self.gravity < -2:
             self.flap_index = 0
-            self.image = pygame.transform.rotozoom(self.bird_images[self.bird_index][self.flap_index], -self.gravity*60/6, 1)
+            self.image = pygame.transform.rotozoom(self.bird_images[self.bird_index][self.flap_index], -self.gravity*60/self.jump_height, 1)
         elif -2 <= self.gravity <= 2:
             self.flap_index = 1
-            self.image = pygame.transform.rotozoom(self.bird_images[self.bird_index][self.flap_index], -self.gravity*60/6, 1)
+            self.image = pygame.transform.rotozoom(self.bird_images[self.bird_index][self.flap_index], -self.gravity*60/self.jump_height, 1)
         elif self.gravity > 2:
-            self.image = pygame.transform.rotozoom(self.bird_images[self.bird_index][self.flap_index], -self.gravity*60/6, 1)
+            self.image = pygame.transform.rotozoom(self.bird_images[self.bird_index][self.flap_index], -self.gravity*60/self.jump_height, 1)
 
 
     def update(self):

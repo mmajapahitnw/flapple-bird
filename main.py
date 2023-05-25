@@ -1,6 +1,6 @@
 import pygame
 from config import Config, State
-from game_phases import menu_phase, gameplay_phase
+from game_phases import menu_phase, gameplay_phase, gameover_phase
 
 
 
@@ -19,7 +19,7 @@ def main():
         elif State.game_state == 1:
             gameplay_phase()
         elif State.game_state == 2:
-            pass
+            gameover_phase()
 
         update_display()
 

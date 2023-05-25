@@ -7,7 +7,7 @@ class VisualService:
 
     @staticmethod
     def get_game_over():
-        return pygame.image.load('sprites/gameover.png').convert()
+        return pygame.image.load('sprites/gameover.png').convert_alpha()
 
     @staticmethod
     def get_bg_day():
