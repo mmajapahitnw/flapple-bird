@@ -58,7 +58,9 @@ def menu_phase():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if pygame.mouse.get_pressed()[0]:
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+            State.game_state = 1
+        if event.type == pygame.MOUSEBUTTONDOWN:
             State.game_state = 1
 
 def gameplay_phase():
@@ -86,8 +88,7 @@ def gameplay_phase():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            print('space')
+
         if event.type == pipe_timer:
             y = randint(212, 312)
             pipes.add(Pipe(0, y))
@@ -99,10 +100,12 @@ def gameover_phase():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN or (event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE):
+            State.game_state = 1
             pipes.empty()
             State.score = 0
             State.game_state = 1
+            player.sprite.rect.y = (Config.HEIGHT-100)//2
 
     screen.blit(services.VisualService.get_game_over(), (Config.WIDTH//2-services.VisualService.get_game_over().get_width()//2,
                                                          Config.HEIGHT//2-services.VisualService.get_game_over().get_height()//2))

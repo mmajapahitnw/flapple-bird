@@ -11,11 +11,11 @@ class Pipe(pygame.sprite.Sprite):
         if self.rotation_index == 0:
             self.image = self.pipe_images[self.pipe_index]
             self.rect = self.image.get_rect(topleft=(Config.WIDTH, y))
-            self.mask = pygame.mask.from_surface(self.image)
+            # self.mask = pygame.mask.from_surface(self.image)
         elif self.rotation_index == 1:
             self.image = pygame.transform.flip(self.pipe_images[self.pipe_index], False, True)
             self.rect = self.image.get_rect(bottomleft=(Config.WIDTH, y))
-            self.mask = pygame.mask.from_surface(self.image)
+            # self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
         self.rect.x -= 2
