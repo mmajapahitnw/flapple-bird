@@ -1,8 +1,6 @@
 import pygame
 from config import Config, State
-from game_phases import menu_phase, gameplay_phase, gameover_phase
-
-
+from functions import menu_phase, gameplay_phase, gameover_phase
 
 frame_per_sec = pygame.time.Clock()
 

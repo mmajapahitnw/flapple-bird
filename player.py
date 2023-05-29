@@ -1,5 +1,5 @@
 import pygame
-from config import Config
+from config import Config, State
 from services import VisualService
 
 class Player(pygame.sprite.Sprite):
@@ -51,7 +51,18 @@ class Player(pygame.sprite.Sprite):
             self.mask = pygame.mask.from_surface(self.image)
 
 
+
     def update(self):
         self.player_input()
         self.apply_gravity()
-        self.animation()
+        if (pygame.time.get_ticks() - State.apple_event) >= State.apple_duration:
+            self.bird_index = 0
+            self.animation()
+        else:
+            if ((pygame.time.get_ticks() - State.apple_event) // State.apple_phase_time) % 3 == 0:
+                self.bird_index = 1
+            elif ((pygame.time.get_ticks() - State.apple_event) // State.apple_phase_time) % 3 == 1:
+                self.bird_index = 2
+            else:
+                self.bird_index = 0
+            self.animation()
