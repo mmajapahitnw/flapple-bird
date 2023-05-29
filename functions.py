@@ -56,6 +56,7 @@ def check_apple_collision():
     if pygame.sprite.spritecollide(P1, apple, True):
         State.score += 5
         State.apple_event = pygame.time.get_ticks()
+        State.apple_jumpstart = 0
 
 def menu_phase():
     # display backgorund
@@ -94,10 +95,9 @@ def gameplay_phase():
         State.daytime = False
 
     # apple mode
-    if (pygame.time.get_ticks() - State.apple_event) >= State.apple_duration:
+    if (pygame.time.get_ticks() - State.apple_event + State.apple_jumpstart) >= State.apple_duration:
         # is game over
         check_pipe_collisions()
-
     else:
         pass
 
@@ -117,8 +117,6 @@ def gameplay_phase():
     scores.draw(screen)
     scores.update()
 
-
-
     check_apple_collision()
 
     # event loops
@@ -133,7 +131,7 @@ def gameplay_phase():
             pipes.add(Pipe(1, y-Config.PIPE_GAP))
 
         if event.type == apple_timer:
-            y = randint(100, Config.HEIGHT - 100)
+            y = randint(100, Config.HEIGHT - 200)
             apple.add(Apple(y))
 
 def gameover_phase():

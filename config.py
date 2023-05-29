@@ -15,4 +15,5 @@ class State:
     apple_event = 0
     apple_duration = 2000
     apple_phase_time = 100
+    apple_jumpstart = apple_duration
 

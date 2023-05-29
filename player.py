@@ -55,7 +55,7 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.player_input()
         self.apply_gravity()
-        if (pygame.time.get_ticks() - State.apple_event) >= State.apple_duration:
+        if (pygame.time.get_ticks() - State.apple_event + State.apple_jumpstart) >= State.apple_duration:
             self.bird_index = 0
             self.animation()
         else:
