@@ -16,4 +16,5 @@ class State:
     apple_duration = 2000
     apple_phase_time = 100
     apple_jumpstart = apple_duration
+    pipe_color = 0
 

@@ -119,3 +119,24 @@ class VisualService:
     def get_nine():
         return pygame.image.load('sprites/9.png')
 
+class AudioService:
+    @staticmethod
+    def get_music():
+        return pygame.mixer.Sound('audio/music.wav')
+
+
+    @staticmethod
+    def get_flap():
+        return pygame.mixer.Sound('audio/flap.ogg')
+
+    @staticmethod
+    def get_hit():
+        return pygame.mixer.Sound('audio/hit.wav')
+
+    @staticmethod
+    def get_point():
+        return pygame.mixer.Sound('audio/point.wav')
+
+    @staticmethod
+    def get_apple():
+        return pygame.mixer.Sound('audio/apple.mp3')

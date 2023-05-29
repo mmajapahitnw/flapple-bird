@@ -1,12 +1,12 @@
 import pygame
 from config import Config, State
-from services import VisualService
+from services import VisualService, AudioService
 
 class Pipe(pygame.sprite.Sprite):
-    def __init__(self, rotation_index, y):
+    def __init__(self, rotation_index, y, color):
         super().__init__()
         self.pipe_images = [VisualService.get_green_pipe(), VisualService.get_red_pipe()]
-        self.pipe_index = 0
+        self.pipe_index = color
         self.rotation_index = rotation_index
         if self.rotation_index == 0:
             self.image = self.pipe_images[self.pipe_index]
@@ -21,4 +21,5 @@ class Pipe(pygame.sprite.Sprite):
         self.rect.x -= 2
         if self.rect.right <= 0:
             State.score += 0.5
+            AudioService.get_point().play()
             self.kill()

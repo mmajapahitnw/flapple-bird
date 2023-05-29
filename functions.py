@@ -1,9 +1,6 @@
 import pygame
 from random import randint
-from services import sine
-
-import pygame.sprite
-
+# import pygame.sprite
 from player import Player
 from pipe import Pipe
 from apple import Apple
@@ -22,7 +19,7 @@ screen = Config.SCREEN
 pipe_timer = pygame.USEREVENT + 1
 pygame.time.set_timer(pipe_timer, 2000)
 apple_timer = pygame.USEREVENT + 2
-pygame.time.set_timer(apple_timer, 5000)
+pygame.time.set_timer(apple_timer, 8000)
 
 P1 = Player()
 player = pygame.sprite.GroupSingle()
@@ -37,7 +34,7 @@ scores = pygame.sprite.GroupSingle(Score())
 
 
 def move_scroll(scroll):
-    scroll -= 1.5
+    scroll -= 2
     if scroll <= -24:
         scroll = 0
     return scroll
@@ -48,8 +45,10 @@ def moving_ground(screen, scroll):
 def check_pipe_collisions():
     if pygame.sprite.spritecollide(P1, pipes, False, pygame.sprite.collide_mask):
         State.game_state = 2
+        services.AudioService.get_hit().play()
     if player.sprite.rect.bottom >= 403 or player.sprite.rect.top < -150:
         State.game_state = 2
+        services.AudioService.get_hit().play()
 
 def check_apple_collision():
     pygame.sprite.groupcollide(apple, pipes, True, False)
@@ -57,6 +56,7 @@ def check_apple_collision():
         State.score += 5
         State.apple_event = pygame.time.get_ticks()
         State.apple_jumpstart = 0
+        services.AudioService.get_apple().play()
 
 def menu_phase():
     # display backgorund
@@ -127,8 +127,8 @@ def gameplay_phase():
 
         if event.type == pipe_timer:
             y = randint(50 + Config.PIPE_GAP, Config.HEIGHT - 100 - 50)
-            pipes.add(Pipe(0, y))
-            pipes.add(Pipe(1, y-Config.PIPE_GAP))
+            pipes.add(Pipe(0, y, State.pipe_color))
+            pipes.add(Pipe(1, y-Config.PIPE_GAP, State.pipe_color))
 
         if event.type == apple_timer:
             y = randint(100, Config.HEIGHT - 200)
@@ -147,6 +147,7 @@ def gameover_phase():
             State.score = 0
             State.game_state = 1
             P1.rect.y = (Config.HEIGHT-100)//2
+            State.pipe_color=randint(0,1)
     screen.blit(services.VisualService.get_game_over(), (Config.WIDTH // 2 - services.VisualService.get_game_over().get_width() // 2,
                                                          Config.HEIGHT // 2 - services.VisualService.get_game_over().get_height() // 2))
 

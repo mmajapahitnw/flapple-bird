@@ -1,6 +1,7 @@
 import pygame
 from config import Config, State
 from functions import menu_phase, gameplay_phase, gameover_phase
+from services import AudioService
 
 frame_per_sec = pygame.time.Clock()
 
@@ -10,6 +11,8 @@ def update_display():
 
 def main():
     pygame.init()
+    bg_music = AudioService.get_music()
+    bg_music.play(loops=-1)
 
     while True:
         if State.game_state == 0:

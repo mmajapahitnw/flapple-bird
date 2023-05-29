@@ -1,6 +1,6 @@
 import pygame
 from config import Config, State
-from services import VisualService
+from services import VisualService, AudioService
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
@@ -24,12 +24,9 @@ class Player(pygame.sprite.Sprite):
         self.gravity = 0
         self.jump_height = 5
 
-
     def player_input(self):
         if pygame.mouse.get_pressed()[0] or pygame.key.get_pressed()[pygame.K_SPACE]:
             self.gravity = -self.jump_height
-
-
 
     def apply_gravity(self):
         self.gravity += 0.4
