@@ -1,6 +1,6 @@
 import pygame
 from config import Config, State
-from services import VisualService, AudioService
+from services import VisualService
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):

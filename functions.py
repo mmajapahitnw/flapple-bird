@@ -1,6 +1,5 @@
 import pygame
 from random import randint
-# import pygame.sprite
 from player import Player
 from pipe import Pipe
 from apple import Apple
@@ -30,8 +29,6 @@ pipes = pygame.sprite.Group()
 apple = pygame.sprite.Group(Apple(300))
 
 scores = pygame.sprite.GroupSingle(Score())
-
-
 
 def move_scroll(scroll):
     scroll -= 2
